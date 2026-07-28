@@ -37,6 +37,7 @@ export function SiteHeader() {
             { href: '#fonctionnalites', label: 'Fonctionnalités' },
             { href: '#commandes', label: 'Commandes' },
             { href: '#statistiques', label: 'Statistiques' },
+            { href: '#actus', label: 'Actus' },
           ].map((item) => (
             <a
               key={item.href}

@@ -1,4 +1,5 @@
 import { Coins, Gamepad2, Languages, ShieldCheck, Ticket } from 'lucide-react'
+import { HiddenEgg } from '@/components/fun/hidden-egg'
 import { Reveal } from '@/components/reveal'
 import { SplitText } from '@/components/split-text'
 
@@ -9,6 +10,7 @@ const features = [
     description:
       "Bloque le spam, les liens malveillants, la pub non autorisée et les raids automatiques. Captcha interactif et sanctions graduelles instantanées.",
     tone: 'accent',
+    mascotKey: 'guard',
   },
   {
     icon: Ticket,
@@ -16,6 +18,7 @@ const features = [
     description:
       'Création de salons de support en un clic avec menus déroulants interactifs (Support, Candidatures, Partenariats) et transcription automatique.',
     tone: 'primary',
+    mascotKey: 'tickets',
   },
   {
     icon: Languages,
@@ -23,6 +26,7 @@ const features = [
     description:
       "Réagissez simplement avec un emoji drapeau sur n'importe quel message pour recevoir sa traduction privée immédiate.",
     tone: 'sakura',
+    mascotKey: 'translate',
   },
   {
     icon: Coins,
@@ -30,6 +34,7 @@ const features = [
     description:
       "Système monétaire complet avec travail, bonus quotidiens, braquages, cartes cadeaux, salaires par rôle et boutique d'œufs mystères.",
     tone: 'accent',
+    mascotKey: 'economy',
   },
   {
     icon: Gamepad2,
@@ -37,6 +42,7 @@ const features = [
     description:
       'Jouez directement dans Discord : Morpion, Pendu, Combats de monstres RPG, Casino (Poker, Roulette, Machine à sous) et Dino.',
     tone: 'sakura',
+    mascotKey: 'games',
   },
 ]
 
@@ -48,11 +54,18 @@ const toneClasses: Record<string, string> = {
 
 export function Features() {
   return (
-    <section id="fonctionnalites" className="relative border-b border-border/60">
+    <section
+      id="fonctionnalites"
+      data-mascot-zone="brave"
+      className="relative overflow-hidden border-b border-border/60"
+    >
       <div
         aria-hidden="true"
         className="hue-drift pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(50%_100%_at_50%_0%,oklch(0.5_0.2_302/0.14),transparent_70%)]"
       />
+
+      {/* Second hidden egg: top-left corner of the features grid. */}
+      <HiddenEgg className="left-3 top-24" />
       <div className="relative mx-auto max-w-6xl px-4 py-20">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
@@ -68,14 +81,17 @@ export function Features() {
         </Reveal>
 
         <ul className="mt-14 grid gap-6 md:grid-cols-2">
-          {features.map(({ icon: Icon, title, description, tone }, index) => (
+          {features.map(({ icon: Icon, title, description, tone, mascotKey }, index) => (
             <Reveal
               as="li"
               key={title}
               delay={index * 90}
               variant={index % 2 === 0 ? 'left' : 'right'}
             >
-              <div className="spotlight glow-border tilt-3d group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15">
+              <div
+                data-mascot-key={mascotKey}
+                className="spotlight glow-border tilt-3d group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15"
+              >
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"

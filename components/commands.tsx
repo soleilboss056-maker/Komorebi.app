@@ -559,7 +559,12 @@ export function Commands() {
   }, [])
 
   return (
-    <section id="commandes" className="relative border-b border-border/60 bg-card/20">
+    <section
+      id="commandes"
+      data-mascot-zone="party"
+      data-mascot-key="commands"
+      className="relative border-b border-border/60 bg-card/20"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(50%_100%_at_50%_0%,oklch(0.55_0.2_350/0.14),transparent_70%)]"

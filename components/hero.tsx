@@ -13,7 +13,11 @@ const points = [
 
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden border-b border-border/60">
+    <section
+      id="top"
+      data-mascot-zone="happy"
+      className="relative overflow-hidden border-b border-border/60"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 -top-40 h-[520px] bg-[radial-gradient(60%_100%_at_50%_0%,oklch(0.45_0.22_302/0.5),transparent_70%)]"
@@ -101,6 +105,7 @@ export function Hero() {
             href={INVITE_URL}
             target="_blank"
             rel="noopener noreferrer"
+            data-mascot-key="invite"
             className="magnetic group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-xl shadow-primary/30 transition-shadow duration-300 hover:shadow-2xl hover:shadow-primary/50 sm:w-auto"
           >
             <span className="absolute inset-0 -translate-x-full bg-[linear-gradient(100deg,transparent,oklch(1_0_0/0.4),transparent)] transition-transform duration-700 group-hover:translate-x-full" />

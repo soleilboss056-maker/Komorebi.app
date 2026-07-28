@@ -1,0 +1,333 @@
+/**
+ * Static, hand-written content for the interactive layer (mascot, easter eggs,
+ * secret news).
+ *
+ * SECURITY NOTE: every string below is authored here and rendered as plain text
+ * through JSX children only. Nothing in this file is ever injected as HTML
+ * (no `dangerouslySetInnerHTML` anywhere in the project), and the mascot only
+ * ever *looks up* keys in these records — it never renders text coming from the
+ * DOM, the URL or user input. That makes the whole feature XSS-proof by design.
+ */
+
+export type Mood =
+  | 'idle'
+  | 'happy'
+  | 'scared'
+  | 'brave'
+  | 'proud'
+  | 'curious'
+  | 'shocked'
+  | 'party'
+  | 'sleepy'
+
+/** Small, cheap visual flourishes played around the mascot. */
+export type Effect = 'raid' | 'shield' | 'ticket' | 'coin' | 'sparkle' | 'zzz'
+
+export type MascotLine = {
+  text: string
+  mood: Mood
+  effect?: Effect
+  /** Optional second beat, shown a couple of seconds later (e.g. raid won). */
+  follow?: { text: string; mood: Mood; effect?: Effect }
+}
+
+/* ------------------------------------------------------------------ *
+ * Hover lines — keyed by the `data-mascot-key` attribute on elements. *
+ * Unknown keys are simply ignored.                                    *
+ * ------------------------------------------------------------------ */
+
+export const HOVER_LINES: Record<string, MascotLine> = {
+  guard: {
+    text: 'Même pas peur des raids ! J’en ai stoppé un pendant que tu lisais ça.',
+    mood: 'brave',
+    effect: 'shield',
+  },
+  tickets: {
+    text: 'Un ticket ouvert, un salon créé, une transcription archivée. Zéro clic perdu.',
+    mood: 'happy',
+    effect: 'ticket',
+  },
+  translate: {
+    text: 'Réagis avec un drapeau et je traduis en privé. Même le japonais du dimanche.',
+    mood: 'curious',
+    effect: 'sparkle',
+  },
+  economy: {
+    text: 'Attention, tes ZenCoins me font envie... je plaisante. Presque.',
+    mood: 'happy',
+    effect: 'coin',
+  },
+  games: {
+    text: 'Morpion, Pendu, RPG, Casino... prépare-toi à perdre avec le sourire.',
+    mood: 'party',
+    effect: 'sparkle',
+  },
+  invite: {
+    text: 'Oui ! Clique. Je promets d’être sage. À 87 %.',
+    mood: 'party',
+    effect: 'sparkle',
+  },
+  'stat-members': {
+    text: '10 000 membres surveillés et pas un seul spam passé aujourd’hui.',
+    mood: 'proud',
+    effect: 'shield',
+  },
+  'stat-servers': {
+    text: '50 serveurs, 50 maisons. Je fais le ménage dans toutes.',
+    mood: 'proud',
+  },
+  'stat-latency': {
+    text: '15 ms. Je réponds avant que tu finisses ta commande.',
+    mood: 'shocked',
+  },
+  'stat-commands': {
+    text: 'Plus de 100 commandes. Oui, j’ai relu la doc. Deux fois.',
+    mood: 'curious',
+  },
+  commands: {
+    text: 'Tape « / » dans Discord et tout ça apparaît. Magie ? Non, du code.',
+    mood: 'happy',
+  },
+  news: {
+    text: 'Il y a des actus verrouillées ici. À toi de les faire tomber.',
+    mood: 'curious',
+  },
+  trap: {
+    text: 'Ne clique pas sur ce bouton. Vraiment. Bon, clique un peu.',
+    mood: 'shocked',
+  },
+  egg: {
+    text: 'Tu l’as trouvé... personne ne le trouve jamais !',
+    mood: 'party',
+    effect: 'sparkle',
+  },
+}
+
+/* ---------------------------------------------------- *
+ * Ambient scenarios — played on a slow, gentle rotation *
+ * ---------------------------------------------------- */
+
+export const SCENARIOS: MascotLine[] = [
+  {
+    text: 'Alerte raid ! 12 comptes viennent de rejoindre en 3 secondes...',
+    mood: 'scared',
+    effect: 'raid',
+    follow: {
+      text: 'Raid neutralisé. 12 bans, 0 dégât. Je retourne à mon thé.',
+      mood: 'proud',
+      effect: 'shield',
+    },
+  },
+  {
+    text: 'Lien de phishing détecté dans #général. Suppression immédiate.',
+    mood: 'brave',
+    effect: 'shield',
+    follow: { text: 'Message supprimé, auteur averti. Bien tenté.', mood: 'proud' },
+  },
+  {
+    text: 'Nouveau ticket : « mon rôle a disparu ». J’enquête.',
+    mood: 'curious',
+    effect: 'ticket',
+    follow: { text: 'Rôle rendu, ticket fermé, transcription envoyée.', mood: 'happy' },
+  },
+  {
+    text: 'Quelqu’un vient de perdre 4 000 ZenCoins à la roulette. Pas moi.',
+    mood: 'happy',
+    effect: 'coin',
+  },
+  {
+    text: 'Boss hebdomadaire vaincu par ton serveur. Loot : un œuf légendaire.',
+    mood: 'party',
+    effect: 'coin',
+  },
+  {
+    text: 'On m’a réagi avec un drapeau japonais. Traduction envoyée en privé.',
+    mood: 'happy',
+    effect: 'sparkle',
+  },
+  {
+    text: 'Captcha envoyé au nouveau membre. S’il est un robot, on sera deux.',
+    mood: 'curious',
+  },
+  {
+    text: '3 h du matin, serveur calme. Je garde un œil ouvert.',
+    mood: 'sleepy',
+    effect: 'zzz',
+  },
+  {
+    text: 'Tentative de spam d’invitations : 47 messages bloqués d’un coup.',
+    mood: 'brave',
+    effect: 'shield',
+  },
+  {
+    text: 'Psst... essaie le Code Konami : ↑ ↑ ↓ ↓ ← → ← → B A.',
+    mood: 'curious',
+    effect: 'sparkle',
+  },
+]
+
+/* ------------------------------- *
+ * Mode conseils (click on mascot) *
+ * ------------------------------- */
+
+export const TIPS: string[] = [
+  'Survole les cartes de fonctionnalités : je commente absolument tout.',
+  'Le Code Konami (↑ ↑ ↓ ↓ ← → ← → B A) déclenche une pluie de monstres RPG.',
+  'Un œuf brillant est caché sur cette page. Il est petit. Très petit.',
+  'Le bouton « Ne pas cliquer » ne doit pas être cliqué. Évidemment.',
+  'Tape z-e-n au clavier pour débloquer un secret très... calme.',
+  'Clique-moi 10 fois si tu veux connaître mes origines honteuses.',
+  'Chaque secret trouvé déverrouille une actualité cachée plus bas.',
+  'Descends jusqu’au bas de la page pour le badge Explorateur.',
+  'Le compteur de latence ne ment pas : je réponds en moins de 15 ms.',
+  'Astuce Discord : tape « / » puis « ticket » pour ouvrir un support.',
+]
+
+/* ---------------- *
+ * Secrets & badges *
+ * ---------------- */
+
+export const SECRET_IDS = ['konami', 'egg', 'trap', 'komo', 'zen', 'explorer'] as const
+export type SecretId = (typeof SECRET_IDS)[number]
+
+export const BADGES: Record<SecretId, { label: string; hint: string }> = {
+  konami: { label: 'Maître du Konami', hint: 'Une vieille combinaison de manette...' },
+  egg: { label: 'Chasseur d’œufs', hint: 'Quelque chose brille dans un coin.' },
+  trap: { label: 'Survivant du faux ban', hint: 'Un bouton te supplie de ne pas cliquer.' },
+  komo: { label: 'Ami de Komo', hint: 'Insiste auprès de la mascotte. Beaucoup.' },
+  zen: { label: 'Mode Zen', hint: 'Trois lettres, très relaxantes, au clavier.' },
+  explorer: { label: 'Explorateur', hint: 'Tout au fond de la page.' },
+}
+
+/* ------------------------- *
+ * News feed (public actus)  *
+ * ------------------------- */
+
+export type NewsItem = {
+  id: string
+  tag: string
+  date: string
+  title: string
+  body: string
+  tone: 'primary' | 'accent' | 'sakura'
+}
+
+export const PUBLIC_NEWS: NewsItem[] = [
+  {
+    id: 'guard-v4',
+    tag: 'Guard',
+    date: 'Juillet 2026',
+    title: 'Guard v4 : captcha adaptatif',
+    body: 'Le captcha change de difficulté selon le score de risque du compte. Les raids massifs sont coupés avant le premier message.',
+    tone: 'accent',
+  },
+  {
+    id: 'tickets-resume',
+    tag: 'Tickets',
+    date: 'Juillet 2026',
+    title: 'Reprise de session sur les tickets',
+    body: 'Un ticket fermé peut être réouvert avec tout son historique, et la transcription est archivée automatiquement.',
+    tone: 'primary',
+  },
+  {
+    id: 'flags-42',
+    tag: 'Traduction',
+    date: 'Juin 2026',
+    title: '42 drapeaux reconnus',
+    body: 'La traduction par réaction couvre désormais 42 langues, avec détection automatique de la langue source.',
+    tone: 'sakura',
+  },
+  {
+    id: 'zeneggs',
+    tag: 'Économie',
+    date: 'Juin 2026',
+    title: 'ZenEggs : œufs légendaires',
+    body: 'Nouvelle rareté dans la boutique, avec cartes cadeaux échangeables et salaires par rôle revalorisés.',
+    tone: 'accent',
+  },
+  {
+    id: 'raid-boss',
+    tag: 'RPG',
+    date: 'Mai 2026',
+    title: 'Boss de raid hebdomadaire',
+    body: 'Tout le serveur combat le même boss chaque semaine. Classement, butin partagé et cicatrices morales.',
+    tone: 'primary',
+  },
+  {
+    id: 'poker',
+    tag: 'Casino',
+    date: 'Mai 2026',
+    title: 'Poker multi-joueurs',
+    body: 'Tables jusqu’à 6 joueurs, mises en ZenCoins, et un croupier qui ne bluffe jamais. Officiellement.',
+    tone: 'sakura',
+  },
+]
+
+export type SecretNewsItem = NewsItem & { secret: SecretId }
+
+export const SECRET_NEWS: SecretNewsItem[] = [
+  {
+    id: 'infinite-monsters',
+    secret: 'konami',
+    tag: 'Secret',
+    date: 'Classé',
+    title: 'Mode Monstre Infini',
+    body: 'Une vague de monstres RPG sans fin, réservée à ceux qui connaissent les vieilles combinaisons de manette. Le skin doré du bot est offert avec.',
+    tone: 'primary',
+  },
+  {
+    id: 'creator-note',
+    secret: 'egg',
+    tag: 'Secret',
+    date: 'Classé',
+    title: 'Le mot du créateur',
+    body: 'Komorebi tient son nom de la lumière qui filtre entre les feuilles. Le bot est né un soir de raid, pour que personne n’ait à veiller à ma place.',
+    tone: 'sakura',
+  },
+  {
+    id: 'komo-jail',
+    secret: 'trap',
+    tag: 'Secret',
+    date: 'Classé',
+    title: 'La prison de Komorebi',
+    body: 'Un salon fictif où les faux bans vont mourir. Personne n’y est vraiment banni : c’est juste une salle d’attente avec de la musique douce.',
+    tone: 'accent',
+  },
+  {
+    id: 'komo-origin',
+    secret: 'komo',
+    tag: 'Secret',
+    date: 'Classé',
+    title: 'Komo était un bug',
+    body: 'La mascotte est apparue à cause d’une boucle d’affichage cassée. Elle a tellement fait rire l’équipe qu’elle est devenue une fonctionnalité.',
+    tone: 'primary',
+  },
+  {
+    id: 'zen-mode',
+    secret: 'zen',
+    tag: 'Secret',
+    date: 'Classé',
+    title: 'Mode Zen',
+    body: 'Les notifications se taisent, les pétales tombent plus lentement et Komo s’endort. Le seul mode où le bot ne fait rien, volontairement.',
+    tone: 'accent',
+  },
+  {
+    id: 'explorer-log',
+    secret: 'explorer',
+    tag: 'Secret',
+    date: 'Classé',
+    title: 'Journal de l’explorateur',
+    body: 'Tu as lu la page jusqu’au bout. Statistiquement, tu fais partie des 3 % les plus curieux. Komo te salue bien bas.',
+    tone: 'sakura',
+  },
+]
+
+/** Message shown by the hidden egg dialog. */
+export const EGG_MESSAGE = {
+  title: 'Message secret du créateur',
+  lines: [
+    'Tu viens de trouver l’œuf caché de Komorebi.',
+    'Ce bot a commencé comme un script de 40 lignes pour bannir un spammeur à 4 h du matin. Il gère aujourd’hui des serveurs entiers, des tickets, une économie et des monstres.',
+    'Merci de fouiller les coins des pages. C’est exactement l’état d’esprit qu’il faut.',
+  ],
+}

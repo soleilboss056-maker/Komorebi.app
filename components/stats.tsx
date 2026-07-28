@@ -4,8 +4,24 @@ import { useEffect, useRef, useState } from 'react'
 import { Activity, Server, Terminal, Users } from 'lucide-react'
 
 const stats = [
-  { icon: Users, target: 10000, prefix: '', suffix: '+', label: 'Membres protégés', accent: false },
-  { icon: Server, target: 50, prefix: '', suffix: '+', label: 'Serveurs Discord', accent: true },
+  {
+    icon: Users,
+    target: 10000,
+    prefix: '',
+    suffix: '+',
+    label: 'Membres protégés',
+    accent: false,
+    mascotKey: 'stat-members',
+  },
+  {
+    icon: Server,
+    target: 50,
+    prefix: '',
+    suffix: '+',
+    label: 'Serveurs Discord',
+    accent: true,
+    mascotKey: 'stat-servers',
+  },
   {
     icon: Activity,
     target: 15,
@@ -13,6 +29,7 @@ const stats = [
     suffix: ' ms',
     label: 'Latence passerelle',
     accent: false,
+    mascotKey: 'stat-latency',
   },
   {
     icon: Terminal,
@@ -21,6 +38,7 @@ const stats = [
     suffix: '+',
     label: 'Commandes Slash',
     accent: true,
+    mascotKey: 'stat-commands',
   },
 ]
 
@@ -60,6 +78,7 @@ function StatItem({
   accent,
   start,
   index,
+  mascotKey,
 }: {
   icon: typeof Users
   target: number
@@ -69,11 +88,13 @@ function StatItem({
   accent: boolean
   start: boolean
   index: number
+  mascotKey: string
 }) {
   const value = useCountUp(target, start)
 
   return (
     <div
+      data-mascot-key={mascotKey}
       data-visible={start ? 'true' : 'false'}
       style={{ ['--reveal-delay' as string]: `${index * 90}ms` }}
       className="reveal group flex cursor-default flex-col items-center gap-2 text-center transition-transform duration-500 hover:-translate-y-1"
@@ -140,6 +161,7 @@ export function Stats() {
     <section
       ref={ref}
       id="statistiques"
+      data-mascot-zone="proud"
       className="relative border-b border-border/60 bg-card/30 overflow-hidden"
     >
       <div
