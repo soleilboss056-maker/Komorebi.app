@@ -23,12 +23,20 @@ export type Mood =
 /** Small, cheap visual flourishes played around the mascot. */
 export type Effect = 'raid' | 'shield' | 'ticket' | 'coin' | 'sparkle' | 'zzz'
 
+/**
+ * Arm/hand poses. The robot only ever moves its own limbs with CSS transforms,
+ * so a gesture costs nothing on the main thread.
+ */
+export type Gesture = 'wave' | 'point' | 'flex' | 'shrug'
+
 export type MascotLine = {
   text: string
   mood: Mood
   effect?: Effect
+  /** Overrides the gesture normally derived from the mood. */
+  gesture?: Gesture
   /** Optional second beat, shown a couple of seconds later (e.g. raid won). */
-  follow?: { text: string; mood: Mood; effect?: Effect }
+  follow?: { text: string; mood: Mood; effect?: Effect; gesture?: Gesture }
 }
 
 /* ------------------------------------------------------------------ *
@@ -163,6 +171,99 @@ export const SCENARIOS: MascotLine[] = [
     text: 'Psst... essaie le Code Konami : ↑ ↑ ↓ ↓ ← → ← → B A.',
     mood: 'curious',
     effect: 'sparkle',
+  },
+]
+
+/* -------------------------------------------------------------- *
+ * Self-talk — Komo comments on herself while she walks around.    *
+ * -------------------------------------------------------------- */
+
+export const SELF_TALK: MascotLine[] = [
+  {
+    text: 'Je m’appelle Komo. Deux bras, deux chenilles, un seul objectif : ton serveur au calme.',
+    mood: 'happy',
+    gesture: 'wave',
+  },
+  {
+    text: 'Je me dégourdis les servomoteurs. Rester au même endroit, ça rouille.',
+    mood: 'idle',
+    gesture: 'shrug',
+  },
+  {
+    text: 'Mon châssis est en aluminium recyclé de vieux serveurs. Écolo et nostalgique.',
+    mood: 'proud',
+    gesture: 'flex',
+  },
+  {
+    text: 'Techniquement je suis un robot. Émotionnellement, je suis un chat.',
+    mood: 'curious',
+    gesture: 'shrug',
+  },
+  {
+    text: 'Mon antenne clignote quand je détecte un raid. Là, elle est tranquille.',
+    mood: 'idle',
+  },
+  {
+    text: 'Je peux soulever 47 bannissements d’un seul bras. Regarde-moi ça.',
+    mood: 'brave',
+    gesture: 'flex',
+    effect: 'shield',
+  },
+  {
+    text: 'Je marche à gauche, je marche à droite. C’est ma pause déjeuner.',
+    mood: 'happy',
+  },
+  {
+    text: 'On m’a codée en une nuit. Ça se voit à mes genoux, mais je tiens debout.',
+    mood: 'curious',
+    gesture: 'shrug',
+  },
+  {
+    text: 'Mon cœur est un voyant lumineux. Il bat à 15 ms, comme le bot.',
+    mood: 'proud',
+  },
+  {
+    text: 'Je n’ai pas de doigts, j’ai trois pinces. Ça suffit pour te faire signe.',
+    mood: 'happy',
+    gesture: 'wave',
+  },
+  {
+    text: 'Parfois je m’arrête net et je réfléchis. Ne t’inquiète pas, je n’ai pas planté.',
+    mood: 'sleepy',
+  },
+  {
+    text: 'Je surveille cette page comme je surveille un salon Discord. Sans cligner.',
+    mood: 'brave',
+  },
+]
+
+/* -------------------------------------------------------------- *
+ * Invite call-out — played when the invite button reaches screen. *
+ * Komo walks under it and points at it with her pincers.           *
+ * -------------------------------------------------------------- */
+
+export const INVITE_CALL: MascotLine[] = [
+  {
+    text: 'Psst ! C’est là-haut. Clique sur « Ajouter le bot », je m’installe en 10 secondes.',
+    mood: 'party',
+    gesture: 'point',
+    effect: 'sparkle',
+  },
+  {
+    text: 'Regarde mes pinces : elles montrent le bouton d’invitation. Ce n’est pas un hasard.',
+    mood: 'happy',
+    gesture: 'point',
+  },
+  {
+    text: 'Juste au-dessus. Un clic et j’arrive avec le Guard, les tickets et les monstres.',
+    mood: 'party',
+    gesture: 'point',
+    effect: 'shield',
+  },
+  {
+    text: 'Je te fais signe depuis tout à l’heure. Ajoute le bot, on va bien s’amuser.',
+    mood: 'happy',
+    gesture: 'wave',
   },
 ]
 
