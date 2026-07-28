@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { Reveal } from '@/components/reveal'
+import { SplitText } from '@/components/split-text'
 
 type Category =
   | 'general'
@@ -569,8 +570,8 @@ export function Commands() {
             Catalogue des commandes
           </p>
           <h2 className="mt-4 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-            <span className="text-shimmer">{commands.length} commandes</span> Slash prêtes à
-            l’emploi
+            <span className="text-shimmer">{commands.length} commandes</span>{' '}
+            <SplitText text="Slash prêtes à l’emploi" step={18} start={120} />
           </h2>
           <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
             Modération, économie, casino, RPG, niveaux, tickets et bien plus — avec autocomplétion
@@ -650,7 +651,7 @@ export function Commands() {
             Aucune commande ne correspond à «&nbsp;{query}&nbsp;».
           </p>
         ) : (
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="paint-lazy mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {shown.map((command, index) => (
               <li
                 key={command.name}
@@ -660,6 +661,10 @@ export function Commands() {
                 }}
                 className="spotlight glow-border group relative animate-swing-in overflow-hidden rounded-xl border border-border/70 bg-card p-5 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15"
               >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-0 h-px scale-x-0 bg-[linear-gradient(90deg,transparent,oklch(0.73_0.2_350),transparent)] transition-transform duration-500 group-hover:scale-x-100"
+                />
                 <div className="relative flex items-start justify-between gap-3">
                   <code className="rounded-md bg-secondary px-2 py-1 font-mono text-xs text-foreground transition-all duration-300 group-hover:bg-primary/20 group-hover:text-primary group-hover:shadow-md group-hover:shadow-primary/20">
                     {command.name}

@@ -81,6 +81,8 @@
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
+  /* Always defined: `text-shimmer` / `text-sakura` become invisible without it. */
+  --sakura: oklch(0.73 0.2 350);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -420,12 +422,27 @@
   transform: translateY(28px);
   transition:
     opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-variant='left'] {
+  transform: translate3d(-42px, 0, 0);
+}
+.reveal[data-variant='right'] {
+  transform: translate3d(42px, 0, 0);
+}
+.reveal[data-variant='zoom'] {
+  transform: scale(0.88);
+}
+.reveal[data-variant='blur'] {
+  filter: blur(14px);
+  transform: translateY(18px);
 }
 .reveal[data-visible='true'] {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 .text-shimmer {
@@ -486,12 +503,14 @@
     linear-gradient(#000 0 0);
   mask-composite: exclude;
   -webkit-mask-composite: xor;
-  animation: border-spin 4s linear infinite;
   pointer-events: none;
 }
+/* The conic-gradient spin is expensive: only run it while hovered/focused,
+   otherwise ~100 cards animate a custom property at once and the page stalls. */
 .glow-border:hover::after,
 .glow-border:focus-visible::after {
   opacity: 1;
+  animation: border-spin 4s linear infinite;
 }
 
 /* Animated dot grid backdrop */
@@ -580,9 +599,195 @@
   will-change: transform, opacity;
 }
 
+/* ---------- Extra motion layer ---------- */
+
+/* Global cursor aura that follows the pointer */
+.cursor-aura {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  height: 460px;
+  width: 460px;
+  translate: calc(var(--cx, 50vw) - 230px) calc(var(--cy, 50vh) - 230px);
+  border-radius: 9999px;
+  background: radial-gradient(circle, oklch(0.61 0.25 302 / 0.16), transparent 65%);
+  filter: blur(28px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  will-change: translate;
+}
+.cursor-aura[data-active='true'] {
+  opacity: 1;
+}
+
+/* Per-character heading entrance */
+.char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em) rotateX(-60deg);
+  animation: char-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--char-delay, 0ms);
+  animation-play-state: paused;
+}
+[data-visible='true'] .char {
+  animation-play-state: running;
+}
+@keyframes char-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+/* Pointer-driven 3D tilt (vars set in JS) */
+.tilt-3d {
+  transform: perspective(900px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Magnetic pull for primary buttons */
+.magnetic {
+  translate: var(--mgx, 0px) var(--mgy, 0px);
+  transition: translate 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scroll-linked parallax + fade (progressive enhancement) */
+@supports (animation-timeline: view()) {
+  .parallax-slow {
+    animation: parallax-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+  .scroll-zoom {
+    animation: scroll-zoom linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 45%;
+  }
+}
+@keyframes parallax-drift {
+  from {
+    transform: translateY(8%);
+  }
+  to {
+    transform: translateY(-8%);
+  }
+}
+@keyframes scroll-zoom {
+  from {
+    transform: scale(0.94);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Animated light beam sitting on a section edge */
+.beam {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0.61 0.25 302 / 0.9),
+    oklch(0.8 0.13 185 / 0.9),
+    transparent
+  );
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: beam-sweep 6s ease-in-out infinite;
+}
+@keyframes beam-sweep {
+  0% {
+    background-position: -60% 0;
+  }
+  100% {
+    background-position: 160% 0;
+  }
+}
+
+/* Click ripple emitted by the motion layer */
+.ripple {
+  position: fixed;
+  z-index: 70;
+  height: 14px;
+  width: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 9999px;
+  border: 2px solid oklch(0.73 0.2 350 / 0.8);
+  pointer-events: none;
+  animation: ripple-out 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes ripple-out {
+  from {
+    opacity: 0.9;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 0;
+    transform: scale(9);
+  }
+}
+
+/* Slow hue drift for decorative gradients */
+.hue-drift {
+  animation: hue-drift 14s ease-in-out infinite alternate;
+}
+@keyframes hue-drift {
+  from {
+    filter: hue-rotate(-14deg) saturate(1);
+  }
+  to {
+    filter: hue-rotate(18deg) saturate(1.25);
+  }
+}
+
+/* Long lists stay cheap to paint */
+.paint-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
+}
+
+/* Header condenses once the page is scrolled */
+.site-header {
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+.site-header > div {
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+:root[data-scrolled='true'] .site-header {
+  background-color: oklch(0.145 0.028 286 / 0.85);
+  box-shadow: 0 10px 40px -20px oklch(0.61 0.25 302 / 0.55);
+}
+:root[data-scrolled='true'] .site-header > div {
+  padding-top: calc(var(--spacing) * 2);
+  padding-bottom: calc(var(--spacing) * 2);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .cursor-aura,
+  .ripple {
+    display: none !important;
+  }
+  .char,
+  .parallax-slow,
+  .scroll-zoom,
+  .beam,
+  .hue-drift {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .tilt-3d,
+  .magnetic {
+    transform: none !important;
+    translate: none !important;
   }
   .petal,
   .text-shimmer,

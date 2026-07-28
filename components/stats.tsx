@@ -115,6 +115,10 @@ export function Stats() {
   useEffect(() => {
     const node = ref.current
     if (!node) return
+    if (typeof IntersectionObserver === 'undefined') {
+      setStart(true)
+      return
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -124,7 +128,9 @@ export function Stats() {
           }
         }
       },
-      { threshold: 0.3 },
+      // threshold 0 so the counters also trigger on very small viewports where
+      // the grid is taller than the screen.
+      { threshold: 0, rootMargin: '0px 0px -10% 0px' },
     )
     observer.observe(node)
     return () => observer.disconnect()
@@ -138,7 +144,7 @@ export function Stats() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,oklch(0.61_0.25_302/0.6),transparent)]"
+        className="beam pointer-events-none absolute inset-x-0 top-0 h-px"
       />
       <div className="mx-auto grid max-w-5xl grid-cols-2 gap-10 px-4 py-16 md:grid-cols-4">
         {stats.map((stat, index) => (

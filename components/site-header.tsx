@@ -4,7 +4,7 @@ import { INVITE_URL } from '@/lib/constants'
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
+    <header className="site-header sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <a href="#top" className="group flex items-center gap-3">
           <span className="relative flex size-10 shrink-0 items-center justify-center">

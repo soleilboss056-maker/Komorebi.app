@@ -1,5 +1,6 @@
 import { Coins, Gamepad2, Languages, ShieldCheck, Ticket } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
+import { SplitText } from '@/components/split-text'
 
 const features = [
   {
@@ -50,7 +51,7 @@ export function Features() {
     <section id="fonctionnalites" className="relative border-b border-border/60">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(50%_100%_at_50%_0%,oklch(0.5_0.2_302/0.14),transparent_70%)]"
+        className="hue-drift pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(50%_100%_at_50%_0%,oklch(0.5_0.2_302/0.14),transparent_70%)]"
       />
       <div className="relative mx-auto max-w-6xl px-4 py-20">
         <Reveal className="mx-auto max-w-2xl text-center">
@@ -58,7 +59,7 @@ export function Features() {
             Fonctionnalités avancées
           </p>
           <h2 className="mt-4 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-            Tout ce dont votre communauté a besoin dans un seul Bot
+            <SplitText text="Tout ce dont votre communauté a besoin dans un seul Bot" step={16} />
           </h2>
           <p className="mt-4 text-pretty text-sm leading-relaxed text-muted-foreground">
             Chaque module est conçu pour offrir une réactivité maximale et une expérience
@@ -68,8 +69,13 @@ export function Features() {
 
         <ul className="mt-14 grid gap-6 md:grid-cols-2">
           {features.map(({ icon: Icon, title, description, tone }, index) => (
-            <Reveal as="li" key={title} delay={index * 90}>
-              <div className="spotlight glow-border group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15">
+            <Reveal
+              as="li"
+              key={title}
+              delay={index * 90}
+              variant={index % 2 === 0 ? 'left' : 'right'}
+            >
+              <div className="spotlight glow-border tilt-3d group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15">
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"

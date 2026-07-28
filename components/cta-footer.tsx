@@ -7,8 +7,8 @@ export function CtaFooter() {
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 py-16">
-        <Reveal>
-          <div className="group relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-3xl border border-primary/25 bg-[linear-gradient(100deg,oklch(0.3_0.14_302),oklch(0.26_0.1_340)_40%,oklch(0.24_0.07_210)_70%,oklch(0.3_0.14_302))] bg-[length:220%_100%] p-8 animate-gradient-pan md:flex-row md:items-center">
+        <Reveal variant="zoom">
+          <div className="spotlight scroll-zoom group relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-3xl border border-primary/25 bg-[linear-gradient(100deg,oklch(0.3_0.14_302),oklch(0.26_0.1_340)_40%,oklch(0.24_0.07_210)_70%,oklch(0.3_0.14_302))] bg-[length:220%_100%] p-8 animate-gradient-pan md:flex-row md:items-center">
             <span
               aria-hidden="true"
               className="pointer-events-none absolute -right-10 -top-16 size-56 rounded-full bg-[oklch(0.73_0.2_350/0.25)] blur-3xl animate-glow"
@@ -38,7 +38,7 @@ export function CtaFooter() {
               href={INVITE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex shrink-0 items-center gap-2 rounded-xl bg-card px-6 py-3 text-sm font-semibold text-card-foreground shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl active:scale-95"
+              className="magnetic group relative inline-flex shrink-0 items-center gap-2 rounded-xl bg-card px-6 py-3 text-sm font-semibold text-card-foreground shadow-lg transition-shadow duration-300 hover:shadow-xl"
             >
               Inviter Komorebi Maintenant
               <Rocket
