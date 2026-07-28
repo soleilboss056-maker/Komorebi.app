@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ArrowRight, CheckCircle2, Sparkles, Zap } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap } from 'lucide-react'
 import { INVITE_URL } from '@/lib/constants'
 import { Petals } from '@/components/petals'
 
@@ -44,16 +44,8 @@ export function Hero() {
           </div>
         </div>
 
-        <div
-          className="mt-8 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary animate-fade-up [animation-delay:100ms]"
-          style={{ animationFillMode: 'both' }}
-        >
-          <Sparkles className="size-3.5" aria-hidden="true" />
-          Propulsé par l&apos;Intelligence Artificielle
-        </div>
-
         <h1
-          className="mt-6 text-balance text-4xl font-extrabold leading-tight tracking-tight animate-fade-up [animation-delay:200ms] sm:text-5xl md:text-6xl"
+          className="mt-8 text-balance text-4xl font-extrabold leading-tight tracking-tight animate-fade-up [animation-delay:200ms] sm:text-5xl md:text-6xl"
           style={{ animationFillMode: 'both' }}
         >
           Le Bot Discord Ultime pour{' '}
@@ -64,8 +56,8 @@ export function Hero() {
           className="mx-auto mt-6 max-w-2xl text-pretty leading-relaxed text-muted-foreground animate-fade-up [animation-delay:300ms]"
           style={{ animationFillMode: 'both' }}
         >
-          Intelligence Artificielle conversationnelle, système de tickets multilingue, modération
-          Guard renforcée, mini-jeux RPG et économie complète. Un seul bot pour tout faire.
+          Système de tickets multilingue, modération Guard renforcée, traduction instantanée,
+          mini-jeux RPG et économie complète. Un seul bot pour tout faire.
         </p>
 
         <div

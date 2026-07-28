@@ -9,7 +9,7 @@ const _mono = JetBrains_Mono({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Komorebi Bot — Le Bot Discord Ultime pour votre Serveur',
   description:
-    'Intelligence Artificielle conversationnelle, tickets multilingues, modération Guard renforcée, mini-jeux RPG et économie complète. Un seul bot pour tout faire.',
+    'Tickets multilingues, modération Guard renforcée, traduction instantanée, mini-jeux RPG et économie complète. Un seul bot pour tout faire.',
   generator: 'v0.app',
   icons: {
     icon: '/komorebi-avatar.png',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Komorebi Bot — Le Bot Discord Ultime',
     description:
-      'IA conversationnelle, tickets multilingues, Guard anti-raid, mini-jeux RPG et économie complète.',
+      'Tickets multilingues, Guard anti-raid, traduction instantanée, mini-jeux RPG et économie complète.',
     images: ['/komorebi-avatar.png'],
     type: 'website',
     locale: 'fr_FR',

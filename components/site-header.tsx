@@ -22,14 +22,9 @@ export function SiteHeader() {
             </span>
           </span>
           <span className="leading-tight">
-            <span className="flex items-center gap-2">
-              <span className="text-sm font-semibold">Komorebi Bot</span>
-              <span className="rounded-md bg-primary/15 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-primary">
-                v3.0 Officiel
-              </span>
-            </span>
+            <span className="block text-sm font-semibold">Komorebi Bot</span>
             <span className="hidden text-[11px] text-muted-foreground sm:block">
-              Bot Discord Intelligent avec IA &amp; Protection
+              Gestion, Protection &amp; Animation de serveur
             </span>
           </span>
         </a>
