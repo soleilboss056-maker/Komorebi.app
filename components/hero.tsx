@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { ArrowRight, CheckCircle2, Zap } from 'lucide-react'
 import { INVITE_URL } from '@/lib/constants'
 import { Petals } from '@/components/petals'
+import { RotatingWords } from '@/components/rotating-words'
 
 const points = [
   'Hébergement 24/7 en continu',
@@ -24,9 +25,33 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute -right-24 top-64 size-72 rounded-full bg-[oklch(0.6_0.14_190/0.14)] blur-3xl animate-glow [animation-delay:2s]"
       />
+      <div
+        aria-hidden="true"
+        className="grid-backdrop pointer-events-none absolute inset-0 opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/3 top-10 h-72 w-[680px] -translate-x-1/2 rounded-full bg-[oklch(0.6_0.2_310/0.16)] blur-3xl animate-aurora"
+      />
       <Petals />
 
       <div className="relative mx-auto max-w-4xl px-4 py-16 text-center sm:py-24">
+        <div
+          className="mb-8 flex justify-center animate-fade-up"
+          style={{ animationFillMode: 'both' }}
+        >
+          <span className="group inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-[11px] font-medium text-foreground backdrop-blur transition-colors hover:border-primary/60">
+            <span className="relative flex size-2">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-accent animate-ring-pulse"
+              />
+              <span className="relative size-2 rounded-full bg-accent" />
+            </span>
+            Bot en ligne · 94 commandes Slash disponibles
+          </span>
+        </div>
+
         <div className="flex justify-center animate-fade-up">
           <div className="relative animate-float">
             <span
@@ -48,8 +73,7 @@ export function Hero() {
           className="mt-8 text-balance text-4xl font-extrabold leading-tight tracking-tight animate-fade-up [animation-delay:200ms] sm:text-5xl md:text-6xl"
           style={{ animationFillMode: 'both' }}
         >
-          Le Bot Discord Ultime pour{' '}
-          <span className="text-shimmer">Gérer, Protéger &amp; Animer</span> votre Serveur.
+          Le Bot Discord Ultime pour <RotatingWords /> votre Serveur.
         </h1>
 
         <p
@@ -90,9 +114,16 @@ export function Hero() {
           className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-muted-foreground animate-fade-up [animation-delay:500ms]"
           style={{ animationFillMode: 'both' }}
         >
-          {points.map((point) => (
-            <li key={point} className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-accent" aria-hidden="true" />
+          {points.map((point, index) => (
+            <li
+              key={point}
+              className="group flex items-center gap-2 transition-colors hover:text-foreground"
+            >
+              <CheckCircle2
+                className="size-4 text-accent animate-bob transition-transform group-hover:scale-125"
+                style={{ animationDelay: `${index * 320}ms` }}
+                aria-hidden="true"
+              />
               {point}
             </li>
           ))}

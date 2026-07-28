@@ -8,10 +8,14 @@ export function CtaFooter() {
     <>
       <section className="mx-auto max-w-6xl px-4 py-16">
         <Reveal>
-          <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-3xl border border-primary/25 bg-[linear-gradient(100deg,oklch(0.3_0.14_302),oklch(0.26_0.1_340)_55%,oklch(0.24_0.07_210))] p-8 md:flex-row md:items-center">
+          <div className="group relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-3xl border border-primary/25 bg-[linear-gradient(100deg,oklch(0.3_0.14_302),oklch(0.26_0.1_340)_40%,oklch(0.24_0.07_210)_70%,oklch(0.3_0.14_302))] bg-[length:220%_100%] p-8 animate-gradient-pan md:flex-row md:items-center">
             <span
               aria-hidden="true"
               className="pointer-events-none absolute -right-10 -top-16 size-56 rounded-full bg-[oklch(0.73_0.2_350/0.25)] blur-3xl animate-glow"
+            />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-[linear-gradient(100deg,transparent,oklch(1_0_0/0.12),transparent)] animate-sheen"
             />
             <div className="relative flex items-center gap-5">
               <Image

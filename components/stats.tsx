@@ -76,16 +76,26 @@ function StatItem({
     <div
       data-visible={start ? 'true' : 'false'}
       style={{ ['--reveal-delay' as string]: `${index * 90}ms` }}
-      className="reveal group flex flex-col items-center gap-2 text-center"
+      className="reveal group flex cursor-default flex-col items-center gap-2 text-center transition-transform duration-500 hover:-translate-y-1"
     >
-      <Icon
-        className={
-          accent
-            ? 'size-6 text-accent transition-transform duration-300 group-hover:scale-125'
-            : 'size-6 text-primary transition-transform duration-300 group-hover:scale-125'
-        }
-        aria-hidden="true"
-      />
+      <span className="relative flex size-11 items-center justify-center">
+        <span
+          aria-hidden="true"
+          className={
+            accent
+              ? 'absolute inset-0 rounded-full bg-accent/15 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100'
+              : 'absolute inset-0 rounded-full bg-primary/20 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100'
+          }
+        />
+        <Icon
+          className={
+            accent
+              ? 'relative size-6 text-accent transition-transform duration-500 group-hover:scale-125 group-hover:animate-wiggle'
+              : 'relative size-6 text-primary transition-transform duration-500 group-hover:scale-125 group-hover:animate-wiggle'
+          }
+          aria-hidden="true"
+        />
+      </span>
       <p className="text-2xl font-bold tabular-nums tracking-tight sm:text-3xl">
         {prefix}
         {value.toLocaleString('fr-FR')}

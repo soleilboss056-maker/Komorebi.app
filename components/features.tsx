@@ -69,17 +69,22 @@ export function Features() {
         <ul className="mt-14 grid gap-6 md:grid-cols-2">
           {features.map(({ icon: Icon, title, description, tone }, index) => (
             <Reveal as="li" key={title} delay={index * 90}>
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10">
+              <div className="spotlight glow-border group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15">
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
                 />
                 <div
-                  className={`relative mb-5 inline-flex size-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 ${toneClasses[tone]}`}
+                  className={`relative mb-5 inline-flex size-11 items-center justify-center rounded-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-lg ${toneClasses[tone]}`}
                 >
-                  <Icon className="size-5" aria-hidden="true" />
+                  <Icon
+                    className="size-5 transition-transform duration-500 group-hover:animate-wiggle"
+                    aria-hidden="true"
+                  />
                 </div>
-                <h3 className="relative text-lg font-semibold">{title}</h3>
+                <h3 className="relative text-lg font-semibold transition-colors duration-300 group-hover:text-primary">
+                  {title}
+                </h3>
                 <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
                   {description}
                 </p>

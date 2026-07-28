@@ -614,7 +614,7 @@ export function Commands() {
           aria-label="Filtrer les commandes"
           className="mt-6 flex flex-wrap justify-center gap-2"
         >
-          {filters.map((filter) => (
+          {filters.map((filter, index) => (
             <button
               key={filter.id}
               type="button"
@@ -624,10 +624,11 @@ export function Commands() {
                 setActive(filter.id)
                 setLimit(PAGE_SIZE)
               }}
+              style={{ animationDelay: `${index * 45}ms`, animationFillMode: 'both' }}
               className={
                 active === filter.id
-                  ? 'flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300'
-                  : 'flex items-center gap-2 rounded-full border border-border/70 bg-card px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary/40 hover:text-foreground active:scale-95'
+                  ? 'flex animate-pop-in items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/40 transition-all duration-300 hover:-translate-y-0.5'
+                  : 'flex animate-pop-in items-center gap-2 rounded-full border border-border/70 bg-card px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:text-foreground active:scale-95'
               }
             >
               {filter.label}
@@ -657,14 +658,14 @@ export function Commands() {
                   animationDelay: `${Math.min(index * 35, 420)}ms`,
                   animationFillMode: 'both',
                 }}
-                className="spotlight group relative animate-fade-up overflow-hidden rounded-xl border border-border/70 bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10"
+                className="spotlight glow-border group relative animate-swing-in overflow-hidden rounded-xl border border-border/70 bg-card p-5 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/15"
               >
                 <div className="relative flex items-start justify-between gap-3">
-                  <code className="rounded-md bg-secondary px-2 py-1 font-mono text-xs text-foreground transition-colors group-hover:bg-primary/20 group-hover:text-primary">
+                  <code className="rounded-md bg-secondary px-2 py-1 font-mono text-xs text-foreground transition-all duration-300 group-hover:bg-primary/20 group-hover:text-primary group-hover:shadow-md group-hover:shadow-primary/20">
                     {command.name}
                   </code>
                   <span
-                    className={`mt-1 shrink-0 text-[9px] font-bold uppercase tracking-widest ${categoryMeta[command.category].tone}`}
+                    className={`mt-1 shrink-0 text-[9px] font-bold uppercase tracking-widest transition-all duration-300 group-hover:tracking-[0.14em] ${categoryMeta[command.category].tone}`}
                   >
                     {categoryMeta[command.category].short}
                   </span>
@@ -682,9 +683,15 @@ export function Commands() {
             <button
               type="button"
               onClick={() => setLimit((value) => value + PAGE_SIZE)}
-              className="rounded-full border border-primary/40 bg-primary/10 px-6 py-2.5 text-xs font-semibold text-foreground transition-all duration-300 hover:border-primary/70 hover:bg-primary/20 active:scale-95"
+              className="group relative overflow-hidden rounded-full border border-primary/40 bg-primary/10 px-6 py-2.5 text-xs font-semibold text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/70 hover:bg-primary/20 hover:shadow-lg hover:shadow-primary/25 active:scale-95"
             >
-              Afficher plus ({visible.length - shown.length} restantes)
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 -translate-x-full bg-[linear-gradient(100deg,transparent,oklch(1_0_0/0.25),transparent)] transition-transform duration-700 group-hover:translate-x-full"
+              />
+              <span className="relative">
+                Afficher plus ({visible.length - shown.length} restantes)
+              </span>
             </button>
           </div>
         )}
