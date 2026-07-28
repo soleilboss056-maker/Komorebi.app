@@ -284,6 +284,136 @@ export const TIPS: string[] = [
   'Astuce Discord : tape « / » puis « ticket » pour ouvrir un support.',
 ]
 
+/* ------------------------------------------------------------------ *
+ * Click reactions — every interactive element on the page makes Komo   *
+ * say something. Named keys come from `data-komo-say` attributes;       *
+ * anything else falls back to the generic pool below.                  *
+ * ------------------------------------------------------------------ */
+
+export const CLICK_LINES: Record<string, MascotLine> = {
+  install: {
+    text: 'Autorisation Discord en route ! Choisis ton serveur, je m’occupe du reste.',
+    mood: 'party',
+    gesture: 'point',
+    effect: 'sparkle',
+  },
+  connect: {
+    text: 'Connexion Discord : je lis ton pseudo et ton avatar, rien d’autre. Promis sur mes servomoteurs.',
+    mood: 'curious',
+    effect: 'shield',
+  },
+  logout: {
+    text: 'Session effacée. J’oublie tout, comme si tu n’étais jamais passé.',
+    mood: 'sleepy',
+    gesture: 'shrug',
+  },
+  'nav-features': {
+    text: 'Direction les fonctionnalités. C’est la partie où je me vante un peu.',
+    mood: 'happy',
+    gesture: 'point',
+  },
+  'nav-commands': {
+    text: 'Le catalogue de commandes ! Prends une chaise, il est long.',
+    mood: 'curious',
+  },
+  'nav-stats': {
+    text: 'Les statistiques. Spoiler : elles sont flatteuses.',
+    mood: 'proud',
+  },
+  'nav-news': {
+    text: 'Les actus. Certaines sont verrouillées, à toi de les faire tomber.',
+    mood: 'curious',
+    effect: 'sparkle',
+  },
+  logo: {
+    text: 'Retour en haut. Mon avatar, mes cerisiers, ma fierté.',
+    mood: 'happy',
+    gesture: 'wave',
+  },
+  'hero-features': {
+    text: 'Bon choix : regarde d’abord ce que je sais faire, invite-moi ensuite.',
+    mood: 'happy',
+    gesture: 'point',
+  },
+  'command-filter': {
+    text: 'Filtre appliqué. Je trie plus vite que je ne bannis, et je bannis vite.',
+    mood: 'proud',
+    effect: 'sparkle',
+  },
+  'command-more': {
+    text: 'Encore des commandes ! Je t’avais dit que la liste était longue.',
+    mood: 'party',
+  },
+  'command-search': {
+    text: 'Tape trois lettres, je trouve la commande. Comme l’autocomplétion sur Discord.',
+    mood: 'curious',
+  },
+  'scroll-top': {
+    text: 'Hop, on remonte. Je garde ma place, moi, sauf si tu me déplaces.',
+    mood: 'happy',
+  },
+  'mission-board': {
+    text: 'Le tableau de missions ! Termine-les toutes et je monte au niveau maximum.',
+    mood: 'brave',
+    effect: 'shield',
+  },
+  'komo-pin': {
+    text: 'Bloquée sur place. Je ne bouge plus d’un boulon jusqu’à nouvel ordre.',
+    mood: 'brave',
+  },
+  'komo-free': {
+    text: 'Libre ! Je repars me balader où je veux sur l’écran.',
+    mood: 'party',
+    gesture: 'wave',
+  },
+  'komo-reset': {
+    text: 'Retour à mon coin d’origine, en bas à gauche. Le confort de l’habitude.',
+    mood: 'sleepy',
+  },
+  footer: {
+    text: 'Tu es arrivé au pied de la page. Il n’y a plus que moi ici.',
+    mood: 'sleepy',
+    effect: 'zzz',
+  },
+}
+
+/**
+ * Fallback pool: the label of the clicked element is injected as plain text
+ * through `{}` so any button, even one added later, still gets a reaction.
+ */
+export const GENERIC_CLICK: readonly { text: (label: string) => string; mood: Mood }[] = [
+  { text: (label) => `« ${label} » : noté, j’enregistre dans mes journaux.`, mood: 'curious' },
+  { text: (label) => `Tu as appuyé sur « ${label} ». Bon réflexe.`, mood: 'happy' },
+  { text: (label) => `« ${label} » ? Je surveille, ne t’inquiète pas.`, mood: 'brave' },
+  { text: (label) => `Clic sur « ${label} ». Mes voyants clignotent d’approbation.`, mood: 'proud' },
+  { text: (label) => `« ${label} », d’accord. Je note ça juste après mon thé.`, mood: 'sleepy' },
+  { text: (label) => `Oh, « ${label} » ! Personne ne clique jamais là.`, mood: 'shocked' },
+  { text: (label) => `« ${label} » activé. Ambiance.`, mood: 'party', },
+]
+
+/** Lines used when Komo is picked up, dropped, or moved with the keyboard. */
+export const DRAG_LINES = {
+  grab: [
+    { text: 'Aaah ! On me soulève. Tiens-moi bien, je n’ai pas de parachute.', mood: 'shocked' as Mood },
+    { text: 'Chenilles dans le vide. Pose-moi où tu veux, je m’adapte.', mood: 'curious' as Mood },
+    { text: 'Transport de mascotte en cours. Merci de ne pas me secouer.', mood: 'scared' as Mood },
+  ],
+  drop: [
+    { text: 'Parfait, cet endroit me plaît. Je m’installe.', mood: 'happy' as Mood },
+    { text: 'Nouveau poste de garde. Vue imprenable sur la page.', mood: 'proud' as Mood },
+    { text: 'Atterrissage réussi. Chenilles au sol, mission reprise.', mood: 'brave' as Mood },
+    { text: 'Ici ? D’accord. J’ai connu pire comme bureau.', mood: 'curious' as Mood },
+  ],
+  keyboard: [
+    { text: 'Déplacement au clavier, très élégant. Les flèches, c’est mon carburant.', mood: 'happy' as Mood },
+    { text: 'Un pas de plus. Continue, j’aime marcher au rythme des touches.', mood: 'curious' as Mood },
+  ],
+  edge: [
+    { text: 'Stop ! Encore un pas et je tombe hors de l’écran.', mood: 'scared' as Mood },
+    { text: 'C’est le bord. Techniquement, le vide. Je préfère rester ici.', mood: 'shocked' as Mood },
+  ],
+} as const
+
 /* ---------------- *
  * Secrets & badges *
  * ---------------- */
@@ -339,11 +469,11 @@ export const PUBLIC_NEWS: NewsItem[] = [
     tone: 'sakura',
   },
   {
-    id: 'zeneggs',
-    tag: 'Économie',
-    date: 'Juin 2026',
-    title: 'ZenEggs : œufs légendaires',
-    body: 'Nouvelle rareté dans la boutique, avec cartes cadeaux échangeables et salaires par rôle revalorisés.',
+    id: 'install-counter',
+    tag: 'Console',
+    date: 'Juillet 2026',
+    title: 'Compteur d’installations vérifié',
+    body: 'Chaque ajout du bot est confirmé par Discord lui-même pendant l’autorisation. Le compteur de la console ne peut pas être gonflé.',
     tone: 'accent',
   },
   {

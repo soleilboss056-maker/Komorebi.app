@@ -30,7 +30,7 @@ const features = [
   },
   {
     icon: Coins,
-    title: 'Économie & ZenEggs Boutique',
+    title: 'Économie & Boutique Mystère',
     description:
       "Système monétaire complet avec travail, bonus quotidiens, braquages, cartes cadeaux, salaires par rôle et boutique d'œufs mystères.",
     tone: 'accent',
