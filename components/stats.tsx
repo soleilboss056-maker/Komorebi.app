@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Activity, Languages, Server, Users } from 'lucide-react'
+import { Activity, Server, Terminal, Users } from 'lucide-react'
 
 const stats = [
   { icon: Users, target: 10000, prefix: '', suffix: '+', label: 'Membres protégés', accent: false },
@@ -15,11 +15,11 @@ const stats = [
     accent: false,
   },
   {
-    icon: Languages,
-    target: 8,
+    icon: Terminal,
+    target: 100,
     prefix: '',
-    suffix: '+ Langues',
-    label: 'Traduction instantanée',
+    suffix: '+',
+    label: 'Commandes Slash',
     accent: true,
   },
 ]

@@ -1,3 +1,4 @@
+import { CommandMarquee } from '@/components/command-marquee'
 import { Commands } from '@/components/commands'
 import { CtaFooter } from '@/components/cta-footer'
 import { Features } from '@/components/features'
@@ -11,6 +12,7 @@ export default function Page() {
       <SiteHeader />
       <main>
         <Hero />
+        <CommandMarquee />
         <Stats />
         <Features />
         <Commands />
