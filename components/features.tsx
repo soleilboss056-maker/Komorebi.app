@@ -1,4 +1,5 @@
 import { Coins, Gamepad2, Languages, ShieldCheck, Ticket } from 'lucide-react'
+import { Reveal } from '@/components/reveal'
 
 const features = [
   {
@@ -20,7 +21,7 @@ const features = [
     title: 'Traduction Multilingue',
     description:
       "Réagissez simplement avec un emoji drapeau sur n'importe quel message pour recevoir sa traduction privée immédiate.",
-    tone: 'primary',
+    tone: 'sakura',
   },
   {
     icon: Coins,
@@ -34,15 +35,25 @@ const features = [
     title: 'Mini-Jeux & RPG Tactique',
     description:
       'Jouez directement dans Discord : Morpion, Pendu, Combats de monstres RPG, Casino (Poker, Roulette, Machine à sous) et Dino.',
-    tone: 'primary',
+    tone: 'sakura',
   },
 ]
 
+const toneClasses: Record<string, string> = {
+  accent: 'bg-accent/15 text-accent',
+  primary: 'bg-primary/15 text-primary',
+  sakura: 'bg-[oklch(0.73_0.2_350/0.15)] text-[oklch(0.78_0.17_350)]',
+}
+
 export function Features() {
   return (
-    <section id="fonctionnalites" className="border-b border-border/60">
-      <div className="mx-auto max-w-6xl px-4 py-20">
-        <div className="mx-auto max-w-2xl text-center">
+    <section id="fonctionnalites" className="relative border-b border-border/60">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(50%_100%_at_50%_0%,oklch(0.5_0.2_302/0.14),transparent_70%)]"
+      />
+      <div className="relative mx-auto max-w-6xl px-4 py-20">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
             Fonctionnalités avancées
           </p>
@@ -53,26 +64,27 @@ export function Features() {
             Chaque module est conçu pour offrir une réactivité maximale et une expérience
             utilisateur parfaite.
           </p>
-        </div>
+        </Reveal>
 
         <ul className="mt-14 grid gap-6 md:grid-cols-2">
-          {features.map(({ icon: Icon, title, description, tone }) => (
-            <li
-              key={title}
-              className="rounded-2xl border border-border/70 bg-card p-6 transition-colors hover:border-primary/40"
-            >
-              <div
-                className={
-                  tone === 'accent'
-                    ? 'mb-5 inline-flex size-10 items-center justify-center rounded-xl bg-accent/15 text-accent'
-                    : 'mb-5 inline-flex size-10 items-center justify-center rounded-xl bg-primary/15 text-primary'
-                }
-              >
-                <Icon className="size-5" aria-hidden="true" />
+          {features.map(({ icon: Icon, title, description, tone }, index) => (
+            <Reveal as="li" key={title} delay={index * 90}>
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-border/70 bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10">
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-16 -top-16 size-40 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+                />
+                <div
+                  className={`relative mb-5 inline-flex size-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6 ${toneClasses[tone]}`}
+                >
+                  <Icon className="size-5" aria-hidden="true" />
+                </div>
+                <h3 className="relative text-lg font-semibold">{title}</h3>
+                <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {description}
+                </p>
               </div>
-              <h3 className="text-lg font-semibold">{title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{description}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Reveal } from '@/components/reveal'
 
 type Category = 'general' | 'fun' | 'economy' | 'leveling' | 'tickets'
 
@@ -94,14 +95,26 @@ const badges: Record<Category, string> = {
   tickets: 'Tickets',
 }
 
+const badgeColors: Record<Category, string> = {
+  general: 'text-muted-foreground',
+  fun: 'text-[oklch(0.78_0.17_350)]',
+  economy: 'text-accent',
+  leveling: 'text-primary',
+  tickets: 'text-accent',
+}
+
 export function Commands() {
   const [active, setActive] = useState<Category | 'all'>('all')
   const visible = active === 'all' ? commands : commands.filter((c) => c.category === active)
 
   return (
-    <section id="commandes" className="border-b border-border/60 bg-card/20">
-      <div className="mx-auto max-w-6xl px-4 py-20">
-        <div className="mx-auto max-w-2xl text-center">
+    <section id="commandes" className="relative border-b border-border/60 bg-card/20">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(50%_100%_at_50%_0%,oklch(0.55_0.2_350/0.12),transparent_70%)]"
+      />
+      <div className="relative mx-auto max-w-6xl px-4 py-20">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
             Catalogue des commandes
           </p>
@@ -111,7 +124,7 @@ export function Commands() {
           <p className="mt-3 text-sm text-muted-foreground">
             Prêtes à l’emploi avec autocomplétion intelligente sur Discord.
           </p>
-        </div>
+        </Reveal>
 
         <div
           role="tablist"
@@ -127,8 +140,8 @@ export function Commands() {
               onClick={() => setActive(filter.id)}
               className={
                 active === filter.id
-                  ? 'rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground'
-                  : 'rounded-full border border-border/70 bg-card px-4 py-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground'
+                  ? 'scale-105 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300'
+                  : 'rounded-full border border-border/70 bg-card px-4 py-2 text-xs font-medium text-muted-foreground transition-all duration-300 hover:border-primary/40 hover:text-foreground active:scale-95'
               }
             >
               {filter.label}
@@ -137,16 +150,19 @@ export function Commands() {
         </div>
 
         <ul className="mt-10 grid gap-4 md:grid-cols-2">
-          {visible.map((command) => (
+          {visible.map((command, index) => (
             <li
-              key={command.name}
-              className="rounded-xl border border-border/70 bg-card p-5 transition-colors hover:border-primary/40"
+              key={`${active}-${command.name}`}
+              style={{ animationDelay: `${Math.min(index * 55, 500)}ms`, animationFillMode: 'both' }}
+              className="group animate-fade-up rounded-xl border border-border/70 bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/10"
             >
               <div className="flex items-start justify-between gap-4">
-                <code className="rounded-md bg-secondary px-2 py-1 font-mono text-xs text-foreground">
+                <code className="rounded-md bg-secondary px-2 py-1 font-mono text-xs text-foreground transition-colors group-hover:bg-primary/20 group-hover:text-primary">
                   {command.name}
                 </code>
-                <span className="mt-1 text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
+                <span
+                  className={`mt-1 text-[9px] font-bold uppercase tracking-widest ${badgeColors[command.category]}`}
+                >
                   {badges[command.category]}
                 </span>
               </div>

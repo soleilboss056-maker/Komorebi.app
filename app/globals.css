@@ -7,6 +7,12 @@
 @theme inline {
   --font-sans: 'Inter', 'Inter Fallback';
   --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback';
+  --color-sakura: var(--sakura);
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-glow: glow 4s ease-in-out infinite;
+  --animate-orbit: orbit 22s linear infinite;
+  --animate-shimmer: shimmer 3.5s linear infinite;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -85,24 +91,25 @@
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.16 0.012 285);
-  --foreground: oklch(0.97 0.005 285);
-  --card: oklch(0.21 0.015 285);
-  --card-foreground: oklch(0.97 0.005 285);
-  --popover: oklch(0.21 0.015 285);
-  --popover-foreground: oklch(0.97 0.005 285);
-  --primary: oklch(0.62 0.24 300);
+  --background: oklch(0.145 0.028 286);
+  --foreground: oklch(0.97 0.008 300);
+  --card: oklch(0.195 0.032 288);
+  --card-foreground: oklch(0.97 0.008 300);
+  --popover: oklch(0.195 0.032 288);
+  --popover-foreground: oklch(0.97 0.008 300);
+  --primary: oklch(0.61 0.25 302);
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.27 0.02 285);
-  --secondary-foreground: oklch(0.97 0.005 285);
-  --muted: oklch(0.27 0.02 285);
-  --muted-foreground: oklch(0.72 0.02 285);
-  --accent: oklch(0.78 0.13 180);
-  --accent-foreground: oklch(0.18 0.02 285);
+  --secondary: oklch(0.26 0.035 288);
+  --secondary-foreground: oklch(0.97 0.008 300);
+  --muted: oklch(0.26 0.035 288);
+  --muted-foreground: oklch(0.73 0.03 292);
+  --accent: oklch(0.8 0.13 185);
+  --accent-foreground: oklch(0.18 0.03 288);
+  --sakura: oklch(0.73 0.2 350);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.62 0.24 300);
+  --border: oklch(0.75 0.08 300 / 16%);
+  --input: oklch(0.75 0.08 300 / 22%);
+  --ring: oklch(0.61 0.25 302);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -121,24 +128,25 @@
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     color-scheme: dark;
-    --background: oklch(0.16 0.012 285);
-    --foreground: oklch(0.97 0.005 285);
-    --card: oklch(0.21 0.015 285);
-    --card-foreground: oklch(0.97 0.005 285);
-    --popover: oklch(0.21 0.015 285);
-    --popover-foreground: oklch(0.97 0.005 285);
-    --primary: oklch(0.62 0.24 300);
+    --background: oklch(0.145 0.028 286);
+    --foreground: oklch(0.97 0.008 300);
+    --card: oklch(0.195 0.032 288);
+    --card-foreground: oklch(0.97 0.008 300);
+    --popover: oklch(0.195 0.032 288);
+    --popover-foreground: oklch(0.97 0.008 300);
+    --primary: oklch(0.61 0.25 302);
     --primary-foreground: oklch(0.99 0 0);
-    --secondary: oklch(0.27 0.02 285);
-    --secondary-foreground: oklch(0.97 0.005 285);
-    --muted: oklch(0.27 0.02 285);
-    --muted-foreground: oklch(0.72 0.02 285);
-    --accent: oklch(0.78 0.13 180);
-    --accent-foreground: oklch(0.18 0.02 285);
+    --secondary: oklch(0.26 0.035 288);
+    --secondary-foreground: oklch(0.97 0.008 300);
+    --muted: oklch(0.26 0.035 288);
+    --muted-foreground: oklch(0.73 0.03 292);
+    --accent: oklch(0.8 0.13 185);
+    --accent-foreground: oklch(0.18 0.03 288);
+    --sakura: oklch(0.73 0.2 350);
     --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.62 0.24 300);
+    --border: oklch(0.75 0.08 300 / 16%);
+    --input: oklch(0.75 0.08 300 / 22%);
+    --ring: oklch(0.61 0.25 302);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -161,5 +169,132 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes petal-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift, 40px), 110vh, 0) rotate(420deg);
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--primary) 0%,
+    var(--sakura) 30%,
+    var(--accent) 55%,
+    var(--sakura) 75%,
+    var(--primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+.petal {
+  position: absolute;
+  top: 0;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(140deg, var(--sakura), oklch(0.62 0.22 320));
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .petal,
+  .text-shimmer {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

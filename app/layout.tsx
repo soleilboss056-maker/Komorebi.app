@@ -12,21 +12,16 @@ export const metadata: Metadata = {
     'Intelligence Artificielle conversationnelle, tickets multilingues, modération Guard renforcée, mini-jeux RPG et économie complète. Un seul bot pour tout faire.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/komorebi-avatar.png',
+    apple: '/komorebi-avatar.png',
+  },
+  openGraph: {
+    title: 'Komorebi Bot — Le Bot Discord Ultime',
+    description:
+      'IA conversationnelle, tickets multilingues, Guard anti-raid, mini-jeux RPG et économie complète.',
+    images: ['/komorebi-avatar.png'],
+    type: 'website',
+    locale: 'fr_FR',
   },
 }
 
